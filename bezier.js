@@ -1,18 +1,18 @@
-function getBezierPoints(points, amount) {
-    let number = amount || 100;
+function getBezierPoints(controlPointsArr, outputPointsAmount) {
+    let number = outputPointsAmount || 100;
     let totalPoints = [];
 
-    function drawSinglePoint(points, precentage) {
-        if(points.length === 1) {
-            return points[0];
+    function drawSinglePoint(controlPointsArr, precentage) {
+        if(controlPointsArr.length === 1) {
+            return controlPointsArr[0];
         };
     
         let lowOrderArr = [];
-        for(let i=0; i<points.length-1; i++) {
-            let x1 = points[i][0];
-            let y1 = points[i][1];
-            let x2 = points[i+1][0];
-            let y2 = points[i+1][1];
+        for(let i=0; i<controlPointsArr.length-1; i++) {
+            let x1 = controlPointsArr[i][0];
+            let y1 = controlPointsArr[i][1];
+            let x2 = controlPointsArr[i+1][0];
+            let y2 = controlPointsArr[i+1][1];
          
             lowOrderArr.push(
                 [
@@ -26,7 +26,7 @@ function getBezierPoints(points, amount) {
     }
 
     for(let i=0; i<=number; i++) {
-        let point = drawSinglePoint(points, (i/number));
+        let point = drawSinglePoint(controlPointsArr, (i/number));
         totalPoints.push(point);
     }
 

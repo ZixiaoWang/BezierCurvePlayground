@@ -9,10 +9,6 @@ window.addEventListener('load', (event) => {
     let applyBtn = $('#applyBtn');
     let clearBtn = $('#clearBtn');
     let pointsArr = [];
-    
-    function $(selector) {
-        return document.querySelector(selector);
-    }
 
     function drawPoint(x, y, size, color) {
         ctx.beginPath();

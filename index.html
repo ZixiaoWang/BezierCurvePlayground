@@ -24,18 +24,32 @@
         <div class="actions-container">
             <strong>Enter Points Number:</strong>
             <input type="number" id="pointsNumber" placeholder="1000"/>  
-            <button id="applyBtn">APPLY</button>
+            <button id="applyBtn">DRAW</button>
             <span>&nbsp;|&nbsp;</span>
             <button id="clearBtn">CLEAR</button>
+        </div>
+
+        <div class="lang-container">
+            <span id="en" class="lang active">EN</span>
+            <span id="tc" class="lang">繁体中文</span>
+            <span id="sc" class="lang">简体中文</span>
         </div>
     </div>
 
     <script>
-        var tcstr = "<h1>Bezier \u66F2\u7DDA\u904A\u6A02\u5834</h1><p>\u9019\u88E1\u662F\u8C9D\u65AF\u66F2\u7DDA\u904A\u6A02\u5834\uFF0C\u9EDE\u64CA\u767D\u8272\u5340\u57DF\u7684\u4EFB\u4F55\u5730\u65B9\u4EE5\u5275\u5EFA\u4E00\u500B\u63A7\u5236\u9EDE\u3002 <br>\u56B4\u683C\u4E0A\u4F86\u8AAA\uFF0C\u6700\u7D42\u751F\u6210\u7684\u66F2\u7DDA\u4E26\u975E\u5B8C\u7F8E\u7684\u5E73\u6ED1\u66F2\u7DDA\uFF0C\u800C\u662F\u57FA\u65BC\u4E00\u7D44\u9EDE\u9663\u7684\u591A\u908A\u5F62\u3002\u9EDE\u6578\u8D8A\u591A\uFF0C\u66F2\u7DDA\u5C31\u8D8A\u5E73\u6ED1\uFF0C\u9ED8\u8A8D\u7684\u9EDE\u6578\u70BA1000\u500B\u9EDE\u3002<br>\u7136\u5F8C\u9EDE\u64CA <b>APPLY</b> \u6309\u9215\u4EE5\u751F\u6210\u8C9D\u65AF\u66F2\u7DDA\uFF0C\u9EDE\u64CA <b>CLEAR</b> \u4EE5\u6E05\u9664\u756B\u5E03\u3002</p>";
-        var scstr = "<h1>Bezier \u66F2\u7EBF\u73A9\u4E50\u56ED</h1><p>\u8FD9\u91CC\u662F\u8D1D\u65AF\u66F2\u7EBF\u73A9\u4E50\u56ED\uFF0C\u70B9\u51FB\u767D\u8272\u533A\u57DF\u7684\u4EFB\u610F\u4E00\u70B9\u4EE5\u521B\u5EFA\u4E00\u4E2A\u63A7\u5236\u70B9\u3002 <br>\u4E25\u683C\u4E0A\u6765\u8BF4\uFF0C\u6700\u7EC8\u751F\u6210\u7684\u66F2\u7EBF\u5E76\u975E\u5B8C\u7F8E\u7684\u5E73\u6ED1\u66F2\u7EBF\uFF0C\u800C\u662F\u57FA\u4E8E\u4E00\u7EC4\u70B9\u9635\u7684\u591A\u8FB9\u5F62\u3002\u70B9\u6570\u8D8A\u591A\uFF0C\u66F2\u7EBF\u5C31\u8D8A\u5E73\u6ED1\uFF0C\u9ED8\u8BA4\u7684\u70B9\u6570\u4E3A1000\u4E2A\u70B9\u3002<br>\u7136\u540E\u70B9\u51FB <b>APPLY</b> \u6309\u94AE\u4EE5\u751F\u6210\u8D1D\u65AF\u66F2\u7EBF\uFF0C\u70B9\u51FB <b>CLEAR</b> \u4EE5\u6E05\u9664\u753B\u5E03\u3002</p>";
-        var enstr = "<h1>Bezier Curve Playground</h1><p>This is a Bezier Curve playground, tap any places in white area to create one control points. <br>Technically, the generated curve is the polygon based on the number of points, more points means the curve will be more smoother, default points number is <b>1000</b><br>Then click <b>APPLY</b> button to generate Bezeir Curve. Click <b>CLEAR</b> button to clear the canvas.</p>";
+        function $(selector) {
+            return document.querySelector(selector);
+        }
+
+        var tcstr = "<h1>Bezier \u66F2\u7DDA\u904A\u6A02\u5834</h1><p>\u9019\u88E1\u662F\u8C9D\u65AF\u66F2\u7DDA\u904A\u6A02\u5834\uFF0C\u9EDE\u64CA\u767D\u8272\u5340\u57DF\u7684\u4EFB\u4F55\u5730\u65B9\u4EE5\u5275\u5EFA\u4E00\u500B\u63A7\u5236\u9EDE\u3002 <br>\u56B4\u683C\u4E0A\u4F86\u8AAA\uFF0C\u6700\u7D42\u751F\u6210\u7684\u66F2\u7DDA\u4E26\u975E\u5B8C\u7F8E\u7684\u5E73\u6ED1\u66F2\u7DDA\uFF0C\u800C\u662F\u57FA\u65BC\u4E00\u7D44\u9EDE\u9663\u7684\u591A\u908A\u5F62\u3002\u9EDE\u6578\u8D8A\u591A\uFF0C\u66F2\u7DDA\u5C31\u8D8A\u5E73\u6ED1\uFF0C\u9ED8\u8A8D\u7684\u9EDE\u6578\u70BA1000\u500B\u9EDE\u3002<br>\u7136\u5F8C\u9EDE\u64CA <b>DRAW</b> \u6309\u9215\u4EE5\u751F\u6210\u8C9D\u65AF\u66F2\u7DDA\uFF0C\u9EDE\u64CA <b>CLEAR</b> \u4EE5\u6E05\u9664\u756B\u5E03\u3002</p>";
+        var scstr = "<h1>Bezier \u66F2\u7EBF\u73A9\u4E50\u56ED</h1><p>\u8FD9\u91CC\u662F\u8D1D\u65AF\u66F2\u7EBF\u73A9\u4E50\u56ED\uFF0C\u70B9\u51FB\u767D\u8272\u533A\u57DF\u7684\u4EFB\u610F\u4E00\u70B9\u4EE5\u521B\u5EFA\u4E00\u4E2A\u63A7\u5236\u70B9\u3002 <br>\u4E25\u683C\u4E0A\u6765\u8BF4\uFF0C\u6700\u7EC8\u751F\u6210\u7684\u66F2\u7EBF\u5E76\u975E\u5B8C\u7F8E\u7684\u5E73\u6ED1\u66F2\u7EBF\uFF0C\u800C\u662F\u57FA\u4E8E\u4E00\u7EC4\u70B9\u9635\u7684\u591A\u8FB9\u5F62\u3002\u70B9\u6570\u8D8A\u591A\uFF0C\u66F2\u7EBF\u5C31\u8D8A\u5E73\u6ED1\uFF0C\u9ED8\u8BA4\u7684\u70B9\u6570\u4E3A1000\u4E2A\u70B9\u3002<br>\u7136\u540E\u70B9\u51FB <b>DRAW</b> \u6309\u94AE\u4EE5\u751F\u6210\u8D1D\u65AF\u66F2\u7EBF\uFF0C\u70B9\u51FB <b>CLEAR</b> \u4EE5\u6E05\u9664\u753B\u5E03\u3002</p>";
+        var enstr = "<h1>Bezier Curve Playground</h1><p>This is a Bezier Curve playground, tap any places in white area to create one control points. <br>Technically, the generated curve is the polygon based on the number of points, more points means the curve will be more smoother, default points number is <b>1000</b><br>Then click <b>DRAW</b> button to generate Bezeir Curve. Click <b>CLEAR</b> button to clear the canvas.</p>";
+        
+        $('#en').addEventListener('click', (event) => { $('#header').innerHTML = enstr; })
+        $('#tc').addEventListener('click', (event) => { $('#header').innerHTML = tcstr; })
+        $('#sc').addEventListener('click', (event) => { $('#header').innerHTML = scstr; })
     </script>
-    <script src="bezier.min.js"></script>
-    <script src="main.min.js"></script>
+    <script src="bezier.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
